@@ -1,0 +1,11 @@
+server:
+  port: 8080
+  error:
+    include-message: always
+
+application:
+  number-of-users: 1000
+  number-of-departments: 1000
+  number-of-companies: 1000
+  size-of-nested-lists: 100
+  percent-of-discrepancies: 10
