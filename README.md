@@ -8,14 +8,14 @@ This datasource is an example for testing data validation tool. The datasource h
 - it uses stable data generator. It means, the data generator will generate exactly the same data set every time you start/restart your service 
   (of course if you define the same number of generated entities: see details in configuration description section);
 - it has 3 endpoints:
-    - GET /users (with request params: 'page' and 'pageSize')
-    - GET /departments (with request params: 'page' and 'pageSize')
-    - GET /companies (with request params: 'page' and 'pageSize')
+    - **GET /users** (with request params: 'page' and 'pageSize')
+    - **GET /departments** (with request params: 'page' and 'pageSize')
+    - **GET /companies** (with request params: 'page' and 'pageSize')
     which return test data;
 - it also has 3 endpoints which return the total size of elements:
-    - GET /users/size
-    - GET /departments/size
-    - GET /companies/size
+    - **GET /users/size**
+    - **GET /departments/size**
+    - **GET /companies/size**
 
 ## How to run
 
@@ -35,11 +35,11 @@ Application can be configured by customizing the next properties:
   instance of the application you can set, for example, 10% of discrepancies.
   
 #### Default configuration:
-- number-of-users: 1000
-- number-of-departments: 1000
-- number-of-companies: 1000
-- size-of-nested-lists: 100
-- percent-of-discrepancies: 0
+- **number-of-users: 1000**
+- **number-of-departments: 1000**
+- **number-of-companies: 1000**
+- **size-of-nested-lists: 100**
+- **percent-of-discrepancies: 0**
 
 ### Star application using docker image
 
@@ -53,11 +53,11 @@ To run the application use:
 
 You can customize the application properties by adding the next environment variables:
 
-- "APPLICATION_NUMBER_OF_USERS=number-you-need"
-- "APPLICATION_NUMBER_OF_DEPARTMENTS=number-you-need"
-- "APPLICATION_NUMBER_OF_COMPANIES=number-you-need"
-- "APPLICATION_SIZE_OF_NESTED_LISTS=number-you-need"
-- "APPLICATION_PERCENT_OF_DISCREPANCIES=number-you-need"
+- **APPLICATION_NUMBER_OF_USERS**
+- **APPLICATION_NUMBER_OF_DEPARTMENTS**
+- **APPLICATION_NUMBER_OF_COMPANIES**
+- **APPLICATION_SIZE_OF_NESTED_LISTS**
+- **APPLICATION_PERCENT_OF_DISCREPANCIES**
 
 These properties override default values. So you have to override only the properties you have to change, otherwise default properties will be used. 
 
