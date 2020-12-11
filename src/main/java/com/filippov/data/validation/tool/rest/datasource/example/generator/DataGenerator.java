@@ -21,7 +21,10 @@ import com.filippov.data.validation.tool.rest.datasource.example.model.Company;
 import com.filippov.data.validation.tool.rest.datasource.example.model.Department;
 import com.filippov.data.validation.tool.rest.datasource.example.model.Employee;
 import com.filippov.data.validation.tool.rest.datasource.example.model.User;
+import com.filippov.data.validation.tool.rest.datasource.example.utils.MemoryUtils;
+import com.filippov.data.validation.tool.rest.datasource.example.utils.Timer;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.time.DateTimeException;
@@ -36,6 +39,7 @@ import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;
 import static java.util.stream.Collectors.toList;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class DataGenerator {
@@ -67,11 +71,13 @@ public class DataGenerator {
     }
 
     public List<User> generateUsers() {
+        final Timer timer = Timer.start();
+        log.debug("Users data set generation has started");
         final Integer n = applicationProperties.getNumberOfUsers();
         final Instant now = Instant.now();
 
         long l = now.toEpochMilli() + (10 * 1000);
-        return IntStream.range(1, n + 1)
+        final List<User> result = IntStream.range(1, n + 1)
                 .mapToObj(id -> User.builder()
                         .intId(id)
                         .longId((long) Integer.MAX_VALUE + id)
@@ -81,13 +87,18 @@ public class DataGenerator {
                         .groupName("groupName-" + id)
                         .build())
                 .collect(toList());
+        log.debug("Users data set generation has finished. Generated: {} users. Execution time: {} ms.", result.size(), timer.stop());
+        MemoryUtils.logMemoryUsage();
+        return result;
     }
 
     public List<Department> generateDepartments() {
+        final Timer timer = Timer.start();
+        log.debug("Departments data set generation has started");
         final Integer n = applicationProperties.getNumberOfDepartments();
         final Integer nestedListSize = applicationProperties.getSizeOfNestedLists();
 
-        return IntStream.range(1, n + 1)
+        final List<Department> result = IntStream.range(1, n + 1)
                 .mapToObj(id -> Department.builder()
                         .intId(id)
                         .longId((long) Integer.MAX_VALUE + id)
@@ -96,12 +107,17 @@ public class DataGenerator {
                         .employees(generateEmployees(id, nestedListSize))
                         .build())
                 .collect(toList());
+        log.debug("Departments data set generation has finished. Generated: {} departments. Execution time: {} ms.", result.size(), timer.stop());
+        MemoryUtils.logMemoryUsage();
+        return result;
     }
 
     public List<Company> generateCompanies() {
+        final Timer timer = Timer.start();
+        log.debug("Companies data set generation has started");
         final Integer n = applicationProperties.getNumberOfCompanies();
 
-        return IntStream.range(1, n + 1)
+        final List<Company> result = IntStream.range(1, n + 1)
                 .mapToObj(id -> Company.builder()
                         .intId(id)
                         .longId((long) Integer.MAX_VALUE + id)
@@ -116,6 +132,9 @@ public class DataGenerator {
                         .competitors((id % 2 == 0) ? asList("Google", "Amazon", "Apple", "Netflix") : singletonList("Facebook"))
                         .build())
                 .collect(toList());
+        log.debug("Companies data set generation has finished. Generated: {} companies. Execution time: {} ms.", result.size(), timer.stop());
+        MemoryUtils.logMemoryUsage();
+        return result;
     }
 
     private List<Employee> generateEmployees(int id, int size) {
@@ -137,10 +156,6 @@ public class DataGenerator {
                             .lastName("Doe")
                             .build());
         }
-    }
-
-    private int nextInt(int cur, int max) {
-        return (cur == max) ? 1 : cur + 1;
     }
 
     private String getCountry(int id) {

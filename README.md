@@ -43,9 +43,9 @@ Application can be configured by customizing the next properties:
 
 ### Star application using docker image
 
-In order to start the application using docker you have to build a docker image with the next command (in project directory):
-
-`docker build . -t dvt-http-datasource`
+In order to start the application using docker you have to do the next steps in the project directory:
+- build the application using command: `./gradlew clean build`
+- then build a docker image with: `docker build . -t dvt-http-datasource`
 
 To run the application use:
 
@@ -61,6 +61,10 @@ You can customize the application properties by adding the next environment vari
 
 These properties override default values. So you have to override only the properties you have to change, otherwise default properties will be used. 
 
+Another point you have to keep in mind is a heap size of your application. Since the application stores all generated data in memory, we have to provide
+enough space for storing this data. In order to specify heap size you can use `JAVA_TOOL_OPTIONS` environment variable. For example `JAVA_TOOL_OPTIONS=-Xmx1g`
+for 1Gb heap.
+
 For example, you want to start two instances of http datasource. You want to have 5000 entities in each table for both datasources. You also want
 to have 20% of discrepancies between them. In order to do this you have to run two docker containers:
 
@@ -68,10 +72,11 @@ First container:
 ```
 docker run
  --name datasource-1
- -e "APPLICATION_NUMBER_OF_USERS=5000"
- -e "APPLICATION_NUMBER_OF_DEPARTMENTS=5000"
- -e "APPLICATION_NUMBER_OF_COMPANIES=5000"
+ -e "APPLICATION_NUMBER_OF_USERS=100000"
+ -e "APPLICATION_NUMBER_OF_DEPARTMENTS=100000"
+ -e "APPLICATION_NUMBER_OF_COMPANIES=100000"
  -e "APPLICATION_PERCENT_OF_DISCREPANCIES=0"
+ -e "JAVA_TOOL_OPTIONS=-Xmx1g"
  -p 8091:8080
  -d
  dvt-http-datasource
@@ -85,6 +90,7 @@ docker run
  -e "APPLICATION_NUMBER_OF_DEPARTMENTS=5000"
  -e "APPLICATION_NUMBER_OF_COMPANIES=5000"
  -e "APPLICATION_PERCENT_OF_DISCREPANCIES=20"
+ -e "JAVA_TOOL_OPTIONS=-Xmx1g"
  -p 8092:8080
  -d
  dvt-http-datasource

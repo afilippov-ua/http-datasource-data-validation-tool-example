@@ -16,16 +16,23 @@
 
 package com.filippov.data.validation.tool.rest.datasource.example;
 
+import com.filippov.data.validation.tool.rest.datasource.example.utils.MemoryUtils;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
+
+import javax.annotation.PostConstruct;
 
 @SpringBootApplication
 @EnableSwagger2
 public class DataValidationToolRestDatasourceExampleApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(DataValidationToolRestDatasourceExampleApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(DataValidationToolRestDatasourceExampleApplication.class, args);
+    }
 
+    @PostConstruct
+    public void post() {
+        MemoryUtils.logMemoryUsage();
+    }
 }

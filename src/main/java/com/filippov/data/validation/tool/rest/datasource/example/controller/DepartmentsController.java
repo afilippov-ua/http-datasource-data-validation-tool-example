@@ -19,6 +19,7 @@ package com.filippov.data.validation.tool.rest.datasource.example.controller;
 import com.filippov.data.validation.tool.rest.datasource.example.model.Department;
 import com.filippov.data.validation.tool.rest.datasource.example.service.DepartmentsService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,6 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequestMapping("departments")
 @RequiredArgsConstructor
@@ -37,6 +39,7 @@ public class DepartmentsController {
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Department> getDepartments(@RequestParam("page") Integer page,
                                            @RequestParam("pageSize") Integer pageSize) {
+        log.debug("Departments data has been requested. Page: {}, pageSize: {}", page, pageSize);
         return departmentsService.getDepartments(page, pageSize);
     }
 

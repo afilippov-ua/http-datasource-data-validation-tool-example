@@ -18,11 +18,17 @@ package com.filippov.data.validation.tool.rest.datasource.example.config;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
+
+@Slf4j
 @Getter
 @Setter
+@ToString
 @Component
 @ConfigurationProperties("application")
 public class ApplicationProperties {
@@ -31,4 +37,9 @@ public class ApplicationProperties {
     private Integer numberOfCompanies;
     private Integer percentOfDiscrepancies;
     private Integer sizeOfNestedLists;
+
+    @PostConstruct
+    public void post() {
+        log.debug("Application properties: " + toString());
+    }
 }
