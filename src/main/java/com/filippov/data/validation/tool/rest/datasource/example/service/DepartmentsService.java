@@ -16,7 +16,7 @@
 
 package com.filippov.data.validation.tool.rest.datasource.example.service;
 
-import com.filippov.data.validation.tool.rest.datasource.example.generator.DataGenerator;
+import com.filippov.data.validation.tool.rest.datasource.example.generator.DepartmentsGenerator;
 import com.filippov.data.validation.tool.rest.datasource.example.model.Department;
 import org.springframework.stereotype.Service;
 
@@ -27,8 +27,8 @@ import java.util.stream.Collectors;
 public class DepartmentsService {
     private final List<Department> data;
 
-    public DepartmentsService(DataGenerator dataGenerator) {
-        this.data = dataGenerator.generateDepartments();
+    public DepartmentsService(DepartmentsGenerator departmentsGenerator) {
+        this.data = departmentsGenerator.generate();
     }
 
     public List<Department> getDepartments(Integer page, Integer pageSize) {

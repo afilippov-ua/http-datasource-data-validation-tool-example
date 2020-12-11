@@ -16,7 +16,7 @@
 
 package com.filippov.data.validation.tool.rest.datasource.example.service;
 
-import com.filippov.data.validation.tool.rest.datasource.example.generator.DataGenerator;
+import com.filippov.data.validation.tool.rest.datasource.example.generator.CompaniesGenerator;
 import com.filippov.data.validation.tool.rest.datasource.example.model.Company;
 import org.springframework.stereotype.Service;
 
@@ -27,8 +27,8 @@ import java.util.stream.Collectors;
 public class CompaniesService {
     private final List<Company> data;
 
-    public CompaniesService(DataGenerator dataGenerator) {
-        this.data = dataGenerator.generateCompanies();
+    public CompaniesService(CompaniesGenerator companiesGenerator) {
+        this.data = companiesGenerator.generate();
     }
 
     public List<Company> getCompanies(Integer page, Integer pageSize) {

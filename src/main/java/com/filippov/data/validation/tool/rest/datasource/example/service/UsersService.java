@@ -16,7 +16,7 @@
 
 package com.filippov.data.validation.tool.rest.datasource.example.service;
 
-import com.filippov.data.validation.tool.rest.datasource.example.generator.DataGenerator;
+import com.filippov.data.validation.tool.rest.datasource.example.generator.UsersGenerator;
 import com.filippov.data.validation.tool.rest.datasource.example.model.User;
 import org.springframework.stereotype.Service;
 
@@ -27,8 +27,8 @@ import java.util.stream.Collectors;
 public class UsersService {
     private final List<User> data;
 
-    public UsersService(DataGenerator dataGenerator) {
-        this.data = dataGenerator.generateUsers();
+    public UsersService(UsersGenerator usersGenerator) {
+        this.data = usersGenerator.generate();
     }
 
     public List<User> getUsers(Integer page, Integer pageSize) {

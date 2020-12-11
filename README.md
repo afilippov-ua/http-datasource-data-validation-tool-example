@@ -59,7 +59,7 @@ You can customize the application properties by adding the next environment vari
 - **APPLICATION_SIZE_OF_NESTED_LISTS**
 - **APPLICATION_PERCENT_OF_DISCREPANCIES**
 
-These properties override default values. So you have to override only the properties you have to change, otherwise default properties will be used. 
+These properties override default values. So you have to override only the properties you want to change, otherwise default properties will be used. 
 
 Another point you have to keep in mind is a heap size of your application. Since the application stores all generated data in memory, we have to provide
 enough space for storing this data. In order to specify heap size you can use `JAVA_TOOL_OPTIONS` environment variable. For example `JAVA_TOOL_OPTIONS=-Xmx1g`
