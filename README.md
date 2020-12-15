@@ -93,30 +93,12 @@ to have 20% of discrepancies between them. In order to do this you have to run t
 
 First container:
 ```
-docker run
- --name datasource-1
- -e "APPLICATION_NUMBER_OF_USERS=100000"
- -e "APPLICATION_NUMBER_OF_DEPARTMENTS=100000"
- -e "APPLICATION_NUMBER_OF_COMPANIES=100000"
- -e "APPLICATION_PERCENT_OF_DISCREPANCIES=0"
- -e "JAVA_TOOL_OPTIONS=-Xmx1g"
- -p 8091:8080
- -d
- afilippov/data-validation-tool-http-datasource-example
+docker run --name datasource-1 -e "APPLICATION_NUMBER_OF_USERS=5000" -e "APPLICATION_NUMBER_OF_DEPARTMENTS=5000" -e "APPLICATION_NUMBER_OF_COMPANIES=5000" -e "APPLICATION_PERCENT_OF_DISCREPANCIES=0" -e "JAVA_TOOL_OPTIONS=-Xmx256m" -p 8091:8080 -d afilippov/data-validation-tool-http-datasource-example:1.0.0
 ```
 
 Second container:
 ```
-docker run
- --name datasource-2
- -e "APPLICATION_NUMBER_OF_USERS=5000"
- -e "APPLICATION_NUMBER_OF_DEPARTMENTS=5000"
- -e "APPLICATION_NUMBER_OF_COMPANIES=5000"
- -e "APPLICATION_PERCENT_OF_DISCREPANCIES=20"
- -e "JAVA_TOOL_OPTIONS=-Xmx1g"
- -p 8092:8080
- -d
- afilippov/data-validation-tool-http-datasource-example
+docker run --name datasource-2 -e "APPLICATION_NUMBER_OF_USERS=5000" -e "APPLICATION_NUMBER_OF_DEPARTMENTS=5000" -e "APPLICATION_NUMBER_OF_COMPANIES=5000" -e "APPLICATION_PERCENT_OF_DISCREPANCIES=20" -e "JAVA_TOOL_OPTIONS=-Xmx256m" -p 8092:8080 -d afilippov/data-validation-tool-http-datasource-example:1.0.0
 ```
 
 After that two application will be available at: `hostname:8091` (first) and `hostname:8091` (second).
