@@ -17,39 +17,62 @@ This datasource is an example for testing data validation tool. The datasource h
     - **GET /departments/size**
     - **GET /companies/size**
 
-## How to run
-
-### Configuration
+## Configuration
 
 Application can be configured by customizing the next properties:
 - **number-of-users**, **number-of-departments**, **number-of-companies**: define how many
-  user/department/company elements has to be generated;
+  user / department / company elements has to be generated;
 
-- **size-of-nested-lists**: department contains field "employees". It represents a list of "employee" entities.
+- **size-of-nested-lists**: department contains field "employees". It represents a list of "employee" entities in every department.
   This param defines how long this list has to be;
 
-- **percent-of-discrepancies**: uses when you run two instances of this service. The idea of this http service is to provide a data set of required size, but 
+- **percent-of-discrepancies**: uses when you run two instances of this service. The idea of this http service is to provide a data set of required size, but
   if you run two instances of the same size they will contain the same data. So data validation tool won't find any
   discrepancies between them. In order to generate some discrepancies we added a 'percent-of-discrepancies' parameter which
   define how many discrepancies has to be generated. So when you start the first instance of datasource you can set this value to 0, and for the second
   instance of the application you can set, for example, 10% of discrepancies.
-  
-#### Default configuration:
+
+### Default configuration:
+
 - **number-of-users: 1000**
 - **number-of-departments: 1000**
 - **number-of-companies: 1000**
 - **size-of-nested-lists: 100**
 - **percent-of-discrepancies: 0**
 
-### Star application using docker image
+## How to run
 
-In order to start the application using docker you have to do the next steps in the project directory:
-- build the application using command: `./gradlew clean build`
-- then build a docker image with: `docker build . -t dvt-http-datasource`
+You can start application **locally** or by using a **docker image**.
+
+### Start application locally
+
+To start the application locally, use `./gradlew bootRun` command.
+
+In order to customize the generated data set you can use the next application properties:
+
+```
+application:
+    number-of-users: 1000
+    number-of-departments: 1000
+    number-of-companies: 1000
+    size-of-nested-lists: 100
+    percent-of-discrepancies: 10
+```
+
+### Start application using docker image
+
+To start the application using docker you can either build the docker image locally or use the published one. 
+
+#### 1. To build the docker image manually from sources:
+   - checkout the project;
+   - build the application using command: `./gradlew clean build`;
+   - then build a docker image with: `docker build . -t afilippov/data-validation-tool-http-datasource-example` in a project directory.
+
+#### 2. To use published docker image, please, visit: [Docker Hub](https://hub.docker.com/repository/docker/afilippov/data-validation-tool-http-datasource-example) page
 
 To run the application use:
 
-`docker run --name <name> -p <your port>:8080 -d dvt-http-datasource`
+`docker run --name <name> -p <your port>:8080 -d afilippov/data-validation-tool-http-datasource-example`
 
 You can customize the application properties by adding the next environment variables:
 
@@ -59,7 +82,7 @@ You can customize the application properties by adding the next environment vari
 - **APPLICATION_SIZE_OF_NESTED_LISTS**
 - **APPLICATION_PERCENT_OF_DISCREPANCIES**
 
-These properties override default values. So you have to override only the properties you want to change, otherwise default properties will be used. 
+These properties override default values. So you have to override only the properties you want to change, otherwise default properties will be used.
 
 Another point you have to keep in mind is a heap size of your application. Since the application stores all generated data in memory, we have to provide
 enough space for storing this data. In order to specify heap size you can use `JAVA_TOOL_OPTIONS` environment variable. For example `JAVA_TOOL_OPTIONS=-Xmx1g`
@@ -79,7 +102,7 @@ docker run
  -e "JAVA_TOOL_OPTIONS=-Xmx1g"
  -p 8091:8080
  -d
- dvt-http-datasource
+ afilippov/data-validation-tool-http-datasource-example
 ```
 
 Second container:
@@ -93,25 +116,10 @@ docker run
  -e "JAVA_TOOL_OPTIONS=-Xmx1g"
  -p 8092:8080
  -d
- dvt-http-datasource
+ afilippov/data-validation-tool-http-datasource-example
 ```
 
 After that two application will be available at: `hostname:8091` (first) and `hostname:8091` (second).
-
-### Start application locally
-
-You can start the application locally using: `./gradlew bootRun`.
-
-In order to customize the generated data set you can use the next application properties:
-
-```
-application:
-    number-of-users: 1000
-    number-of-departments: 1000
-    number-of-companies: 1000
-    size-of-nested-lists: 100
-    percent-of-discrepancies: 10
-```
 
 ## How to access
 
